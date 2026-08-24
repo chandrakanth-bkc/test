@@ -1,22 +1,72 @@
-pipeline:
-  name: fedaad
-  identifier: fedaad
-  projectIdentifier: test
-  orgIdentifier: default
-  tags: {}
-  stages:
-    - stage:
-        name: fewdf
-        identifier: fewdf
-        description: ""
-        type: Custom
-        spec:
-          execution:
-            steps:
-              - step:
-                  type: Wait
-                  name: Wait_1
-                  identifier: Wait_1
-                  spec:
-                    duration: 10m
-        tags: {}
+databaseChangeLog:
+  - changeSet:
+      id: create-table-products
+      author: sarthak
+      comment: Create products table for inventory management
+      labels: ""
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: sku
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: price
+                  type: DECIMAL(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity_in_stock
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: NOW()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: NOW()
+      rollback:
+        - dropTable:
+            tableName: products
+
+  - changeSet:
+      id: create-index-products-sku
+      author: sarthak
+      comment: Add index on SKU column for faster lookups
+      labels: ""
+      changes:
+        - createIndex:
+            indexName: idx_products_sku
+            tableName: products
+            columns:
+              - column:
+                  name: sku
+      rollback:
+        - dropIndex:
+            indexName: idx_products_sku
+            tableName: products
