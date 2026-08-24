@@ -1,0 +1,22 @@
+pipeline:
+  name: fedaad
+  identifier: fedaad
+  projectIdentifier: test
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: fewdf
+        identifier: fewdf
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: Wait
+                  name: Wait_1
+                  identifier: Wait_1
+                  spec:
+                    duration: 10m
+        tags: {}
