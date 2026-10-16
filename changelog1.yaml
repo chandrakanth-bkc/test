@@ -1,0 +1,108 @@
+databaseChangeLog:
+- changeSet:
+    id: 1792140734750-1
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+              unique: true
+            name: email
+            type: VARCHAR(150)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: current_timestamp()
+            name: created_at
+            type: TIMESTAMP(0)
+        tableName: customers
+- changeSet:
+    id: 1792140734750-2
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            name: name
+            type: VARCHAR(64)
+        tableName: gencl_smoke
+- changeSet:
+    id: 1792140734750-3
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            name: customer_id
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            name: amount
+            type: DECIMAL(10, 2)
+        - column:
+            defaultValue: PENDING
+            name: status
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: current_timestamp()
+            name: created_at
+            type: TIMESTAMP(0)
+        tableName: orders
+- changeSet:
+    id: 1792140734750-4
+    author: root (generated)
+    changes:
+    - createIndex:
+        associatedWith: ''
+        columns:
+        - column:
+            name: customer_id
+        indexName: customer_id
+        tableName: orders
+- changeSet:
+    id: 1792140734750-5
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: customer_id
+        baseTableName: orders
+        constraintName: orders_ibfk_1
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: id
+        referencedTableName: customers
+        validate: true
