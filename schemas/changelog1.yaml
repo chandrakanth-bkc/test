@@ -1,0 +1,310 @@
+databaseChangeLog:
+- changeSet:
+    id: 1793106433322-1
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: employees_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR(100)
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: department_id
+            type: INTEGER
+        - column:
+            name: salary
+            type: numeric(12, 2)
+        - column:
+            name: hire_date
+            type: date
+        - column:
+            defaultValueBoolean: true
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: phone_number
+            type: VARCHAR(20)
+        - column:
+            name: address
+            type: VARCHAR(255)
+        tableName: employees
+- changeSet:
+    id: 1793106433322-2
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: projects_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: project_name
+            type: VARCHAR(200)
+        - column:
+            name: start_date
+            type: date
+        - column:
+            name: end_date
+            type: date
+        - column:
+            name: budget
+            type: numeric(10, 2)
+        - column:
+            name: description
+            type: VARCHAR(500)
+        - column:
+            defaultValueNumeric: 1
+            name: priority
+            type: INTEGER
+        tableName: projects
+- changeSet:
+    id: 1793106433322-3
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: departments_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: department_name
+            type: VARCHAR(150)
+        - column:
+            name: location
+            type: VARCHAR(100)
+        - column:
+            name: manager_id
+            type: INTEGER
+        tableName: departments
+- changeSet:
+    id: 1793106433322-4
+    author: root (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: email
+        indexName: idx_employee_email
+        tableName: employees
+        using: btree
+- changeSet:
+    id: 1793106433322-5
+    author: root (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: start_date
+        - column:
+            name: end_date
+        indexName: idx_projects_dates
+        tableName: projects
+        using: btree
+- changeSet:
+    id: 1793106433322-6
+    author: root (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: department_name
+        constraintName: uk_department_name
+        tableName: departments
+- changeSet:
+    id: 1793106433322-7
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: pk_employee_projects
+            name: employee_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: pk_employee_projects
+            name: project_id
+            type: INTEGER
+        - column:
+            name: role
+            type: VARCHAR(100)
+        - column:
+            name: assigned_date
+            type: date
+        tableName: employee_projects
+- changeSet:
+    id: 1793106433322-8
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: company_name
+            type: VARCHAR(200)
+        - column:
+            name: industry
+            type: VARCHAR(100)
+        tableName: employer
+- changeSet:
+    id: 1793106433322-9
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: fourthperson_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(50)
+        - column:
+            name: address1
+            type: VARCHAR(50)
+        - column:
+            name: address2
+            type: VARCHAR(50)
+        - column:
+            name: city
+            type: VARCHAR(30)
+        - column:
+            name: state
+            type: VARCHAR(2)
+        - column:
+            name: country
+            type: VARCHAR(2)
+        - column:
+            name: zip
+            type: VARCHAR(2)
+        - column:
+            name: lastname
+            type: VARCHAR(2)
+        tableName: fourthperson
+- changeSet:
+    id: 1793106433322-10
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: thirdperson_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(50)
+        - column:
+            name: address1
+            type: VARCHAR(50)
+        - column:
+            name: address2
+            type: VARCHAR(50)
+        - column:
+            name: city
+            type: VARCHAR(30)
+        - column:
+            name: state
+            type: VARCHAR(2)
+        - column:
+            name: country
+            type: VARCHAR(2)
+        - column:
+            name: zip
+            type: VARCHAR(2)
+        - column:
+            name: lastname
+            type: VARCHAR(2)
+        - column:
+            name: lastname1
+            type: VARCHAR(2)
+        tableName: thirdperson
+- changeSet:
+    id: 1793106433322-11
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: employee_id
+        baseTableName: employee_projects
+        constraintName: fk_emp_proj_employee
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: employees
+        validate: true
+- changeSet:
+    id: 1793106433322-12
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_id
+        baseTableName: employee_projects
+        constraintName: fk_emp_proj_project
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: projects
+        validate: true
+- changeSet:
+    id: 1793106433322-13
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: department_id
+        baseTableName: employees
+        constraintName: fk_employees_department
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: departments
+        validate: true
